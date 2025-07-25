@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloraCarbon - Offset Your Carbon Footprint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #7dd87d;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #7dd87d;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(45, 80, 22, 0.8), rgba(74, 124, 89, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a7c59;stop-opacity:1" /><stop offset="100%" style="stop-color:%232d5016;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23grad1)"/><circle cx="200" cy="150" r="3" fill="%237dd87d" opacity="0.6"/><circle cx="800" cy="100" r="2" fill="%237dd87d" opacity="0.4"/><circle cx="1000" cy="200" r="4" fill="%237dd87d" opacity="0.3"/><circle cx="300" cy="400" r="2" fill="%237dd87d" opacity="0.5"/><circle cx="600" cy="300" r="3" fill="%237dd87d" opacity="0.4"/></svg>');
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+            text-align: center;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #7dd87d, #5cb85c);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(125, 216, 125, 0.3);
+        }
+
+        /* Floating particles animation */
+        .particle {
+            position: absolute;
+            background: #7dd87d;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { top: 20%; left: 10%; width: 6px; height: 6px; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 60%; left: 85%; width: 8px; height: 8px; animation-delay: 2s; }
+        .particle:nth-child(3) { top: 80%; left: 20%; width: 4px; height: 4px; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            background: white;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2d5016;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 4px solid #7dd87d;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        /* Services Section */
+        .services {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            position: relative;
+            z-index: 10;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7dd87d, #5cb85c);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #7dd87d, #5cb85c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .calculator h2 {
+            color: white;
+        }
+
+        .calc-container {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .calc-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calc-input label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .calc-input input {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .calc-result {
+            background: rgba(255,255,255,0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .calc-result h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footprint-result {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #7dd87d;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #7dd87d;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #7dd87d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #2d5016;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🌱 FloraCarbon</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="hero-content">
+            <h1>Offset Your Carbon Footprint</h1>
+            <p>Join the fight against climate change by offsetting your carbon emissions through verified reforestation and renewable energy projects worldwide.</p>
+            <a href="#calculator" class="cta-button">Calculate Your Impact</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About FloraCarbon</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>FloraCarbon is dedicated to making carbon offsetting accessible, transparent, and impactful. We partner with verified projects around the world to help individuals and businesses neutralize their environmental impact.</p>
+                
+                <p>Our mission is to create a sustainable future by connecting people with high-quality carbon offset projects, including reforestation, renewable energy, and community development initiatives.</p>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2.5M+</div>
+                        <div>Tons CO₂ Offset</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div>Trees Planted</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">150+</div>
+                        <div>Projects Supported</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">25+</div>
+                        <div>Countries Reached</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <svg width="100%" height="400" viewBox="0 0 400 400">
+                    <defs>
+                        <linearGradient id="treeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#7dd87d;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#4a7c59;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Tree trunk -->
+                    <rect x="190" y="250" width="20" height="100" fill="#8B4513"/>
+                    <!-- Tree leaves (multiple circles for organic look) -->
+                    <circle cx="200" cy="200" r="60" fill="url(#treeGrad)" opacity="0.8"/>
+                    <circle cx="170" cy="180" r="45" fill="url(#treeGrad)" opacity="0.9"/>
+                    <circle cx="230" cy="180" r="45" fill="url(#treeGrad)" opacity="0.9"/>
+                    <circle cx="200" cy="150" r="40" fill="url(#treeGrad)"/>
+                    <!-- CO2 absorption arrows -->
+                    <path d="M 100 100 Q 150 120 180 160" stroke="#7dd87d" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                    <path d="M 300 100 Q 250 120 220 160" stroke="#7dd87d" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                    <text x="80" y="95" fill="#2d5016" font-size="14" font-weight="bold">CO₂</text>
+                    <text x="300" y="95" fill="#2d5016" font-size="14" font-weight="bold">CO₂</text>
+                    <text x="160" y="320" fill="#2d5016" font-size="16" font-weight="bold">O₂</text>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#7dd87d"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section services">
+        <h2>Our Carbon Offset Solutions</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🌳</div>
+                <h3>Reforestation Projects</h3>
+                <p>Support tree planting initiatives in deforested areas worldwide. Each tree planted captures approximately 48 pounds of CO₂ annually while restoring biodiversity and supporting local communities.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Renewable Energy</h3>
+                <p>Invest in wind, solar, and hydroelectric projects that replace fossil fuel energy sources. These projects provide clean energy while creating jobs in developing communities.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏭</div>
+                <h3>Methane Capture</h3>
+                <p>Support projects that capture and convert methane emissions from landfills and agricultural operations into clean energy, preventing potent greenhouse gases from reaching the atmosphere.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌾</div>
+                <h3>Regenerative Agriculture</h3>
+                <p>Fund farming practices that sequester carbon in soil while improving crop yields and farmer livelihoods. These projects restore degraded land and enhance food security.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏢</div>
+                <h3>Corporate Solutions</h3>
+                <p>Comprehensive carbon management for businesses including footprint assessment, reduction strategies, and offset procurement with detailed reporting and verification.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Impact Tracking</h3>
+                <p>Real-time monitoring and reporting of your carbon offset impact with satellite imagery, IoT sensors, and blockchain verification for complete transparency.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="section calculator">
+        <h2>Carbon Footprint Calculator</h2>
+        <div class="calc-container">
+            <p style="text-align: center; margin-bottom: 2rem;">Calculate your annual carbon footprint and discover how you can offset it.</p>
+            
+            <div class="calc-grid">
+                <div class="calc-input">
+                    <label for="energy">Monthly Energy Bill ($)</label>
+                    <input type="number" id="energy" placeholder="150" value="150">
+                </div>
+                <div class="calc-input">
+                    <label for="miles">Annual Driving Miles</label>
+                    <input type="number" id="miles" placeholder="12000" value="12000">
+                </div>
+                <div class="calc-input">
+                    <label for="flights">Short-haul Flights/Year</label>
+                    <input type="number" id="flights" placeholder="4" value="4">
+                </div>
+                <div class="calc-input">
+                    <label for="diet">Diet Type</label>
+                    <select id="diet" style="padding: 0.8rem; border: none; border-radius: 10px; font-size: 1rem;">
+                        <option value="2.5">Meat-heavy</option>
+                        <option value="1.9" selected>Average</option>
+                        <option value="1.5">Low-meat</option>
+                        <option value="1.0">Vegetarian</option>
+                        <option value="0.8">Vegan</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="calc-result">
+                <h3>Your Annual Carbon Footprint</h3>
+                <div class="footprint-result" id="result">16.2 tons CO₂</div>
+                <p>Average US household: 16 tons CO₂/year</p>
+                <!-- <a href="#contact" class="cta-button" style="margin-top: 1rem; display: inline-block;">Start Offsetting</a> -->
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>📧 utkarsh17ife@gmail.com</li>
+                    <li>📞 +91 (120) 123-4567</li>
+                    <li>📍 R-9/265, Raj Nagar<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ghaziabad, Uttar Pradesh<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;India - 201002</li>
+                    <!-- <li style="margin-top: 1rem;"><a href="https://forms.gle/your-form-id" target="_blank" style="background: #7dd87d; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; display: inline-block;">📝 Contact Form</a></li> -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Our Projects</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2025 Flora Carbon Management Private Limited. All rights reserved. | Making the world carbon neutral, one offset at a time.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Carbon footprint calculator
+        function calculateFootprint() {
+            const energy = parseFloat(document.getElementById('energy').value) || 0;
+            const miles = parseFloat(document.getElementById('miles').value) || 0;
+            const flights = parseFloat(document.getElementById('flights').value) || 0;
+            const dietMultiplier = parseFloat(document.getElementById('diet').value) || 1.9;
+
+            // Calculation formulas (simplified estimates)
+            const energyFootprint = (energy * 12) * 0.0007; // Energy usage
+            const transportFootprint = miles * 0.0004; // Driving
+            const flightFootprint = flights * 0.5; // Short flights
+            const dietFootprint = dietMultiplier; // Diet impact
+
+            const total = energyFootprint + transportFootprint + flightFootprint + dietFootprint;
+
+            document.getElementById('result').textContent = `${total.toFixed(1)} tons CO₂`;
+        }
+
+        // Calculate on input change
+        document.querySelectorAll('#energy, #miles, #flights, #diet').forEach(input => {
+            input.addEventListener('input', calculateFootprint);
+            input.addEventListener('change', calculateFootprint);
+        });
+
+        // Initial calculation
+        calculateFootprint();
+
+        // Subtle parallax effect for hero section (fixed)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            const speed = scrolled * 0.2; // Reduced speed
+            // Only apply parallax when hero is visible
+            if (scrolled < window.innerHeight) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Animate service cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
